@@ -9,5 +9,6 @@ document with steps how to commit to your branch - https://docs.google.com/docum
 
 this is where the screens are/ this is where you implement the Ui components and screens - basically contains the actual UI and logic for each screen ⬇️
 ![this is where you implement the Ui components and screens - basically contains the actual UI and logic for each screen, this is where the screen is](image.png)
+
 this is where routers for the screens ⬇️
 ![shows the app's routes at a glance, this is the routes for the screen](image-1.png)
