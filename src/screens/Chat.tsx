@@ -77,9 +77,14 @@ export default function ChatScreen({
       </ScrollView>
 
       <View style={styles.composer}>
-        <TextInput placeholder="Type your message..." style={styles.input} />
-        <TouchableOpacity style={styles.sendBtn}>
-          <Text style={{ color: '#fff' }}>Send</Text>
+        <TextInput
+          placeholder="Type your message..."
+          placeholderTextColor='#888'
+          style={styles.input}
+          multiline={true}
+        />
+        <TouchableOpacity style={styles.sendBtn} accessibilityLabel="Send message">
+          <Ionicons name="send" size={18} color="#fff"/>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
