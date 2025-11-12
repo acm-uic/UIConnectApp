@@ -89,9 +89,9 @@ export default function ChatsScreen() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Chats</Text>
-      </View>
+      {/* <View style={styles.header}>
+      <Text style={styles.headerTitle}>Chats</Text>
+      </View> Removed second Chats */}
 
       <FlatList
         data={conversations}
