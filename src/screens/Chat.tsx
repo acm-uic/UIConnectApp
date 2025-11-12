@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
@@ -55,12 +56,12 @@ export default function ChatScreen({
 
         {/* Action buttons */}
         <View style={styles.headerRight}>
-          <TouchableOpacity style={styles.iconBtn} accessibilityLabel="Call">
-            <Text style={styles.iconText}>📞</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.iconBtn} accessibilityLabel="More options">
-            <Text style={styles.iconText}>⋯</Text>
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.iconBtn} accessibilityLabel="Call">
+              <Ionicons name="call" size={20} color="#909090" />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.iconBtn} accessibilityLabel="More options">
+              <Ionicons name="ellipsis-vertical" size={22} color="#888" />
+            </TouchableOpacity>
         </View>
       </View>
       <ScrollView contentContainerStyle={styles.messages}>
