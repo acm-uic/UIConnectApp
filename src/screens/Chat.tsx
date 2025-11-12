@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 type Conversation = {
   id: string;
@@ -26,7 +26,12 @@ export default function ChatScreen({
       .join('')
       .toUpperCase();
   return (
-    <SafeAreaView style={styles.safe}>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 98 : 0}
+    >
+      <SafeAreaView style={styles.safe}>
       <View style={[styles.header, styles.headerRowSpace]}>
         <View style={styles.headerLeft}>
           {onBack ? (
@@ -64,7 +69,7 @@ export default function ChatScreen({
             </TouchableOpacity>
         </View>
       </View>
-      <ScrollView contentContainerStyle={styles.messages}>
+  <ScrollView contentContainerStyle={styles.messages} keyboardShouldPersistTaps="handled">
         <View style={[styles.bubble, styles.bubbleLeft]}>
           <Text>Hey there! How's your week going?</Text>
         </View>
@@ -76,7 +81,17 @@ export default function ChatScreen({
         </View>
       </ScrollView>
 
-      <View style={styles.composer}>
+  <View style={styles.composer}>
+        <TouchableOpacity
+          style={styles.attachBtn}
+          accessibilityLabel="Attach file"
+          onPress={() => {
+            // TODO: open image/file picker (e.g. Expo ImagePicker or react-native-image-picker)
+            console.log('Attach button pressed');
+          }}
+        >
+          <Ionicons name="add" size={22} color="#007AFF" />
+        </TouchableOpacity>
         <TextInput
           placeholder="Type your message..."
           placeholderTextColor='#888'
@@ -87,7 +102,8 @@ export default function ChatScreen({
           <Ionicons name="send" size={18} color="#fff"/>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -125,6 +141,7 @@ const styles = StyleSheet.create({
   iconBtn: { paddingHorizontal: 8, marginLeft: 6 },
   iconText: { fontSize: 18 },
   messages: { padding: 12 },
+  attachBtn: { paddingHorizontal: 8, paddingVertical: 6, marginRight: 8 },
   bubble: { padding: 12, borderRadius: 12, marginBottom: 8, maxWidth: '80%' },
   bubbleLeft: { backgroundColor: '#f1f1f1', alignSelf: 'flex-start' },
   bubbleRight: { backgroundColor: '#b71c1c', alignSelf: 'flex-end' },
