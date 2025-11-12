@@ -1,6 +1,6 @@
-import Chat from '@/src/screens/Chat';
+import Chats from '@/src/screens/Chats';
 import React from 'react';
 
 export default function TabTwoScreen() {
-  return <Chat />;
+  return <Chats />;
 }
