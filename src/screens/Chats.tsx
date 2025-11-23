@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
 import ChatScreen from './Chat';
 
-const conversations = [
+const initialConversations = [
   {
     id: '1',
     name: 'Alex Johnson',
@@ -42,7 +42,7 @@ function getInitials(name: string) {
     .toUpperCase();
 }
 
-function ConversationItem({ item, onPress }: { item: typeof conversations[number]; onPress: () => void }) {
+function ConversationItem({ item, onPress }: { item: typeof initialConversations[number]; onPress: () => void }) {
   return (
     <TouchableOpacity style={styles.item} activeOpacity={0.7} onPress={onPress}>
       <View style={styles.avatar}>
@@ -69,7 +69,8 @@ function ConversationItem({ item, onPress }: { item: typeof conversations[number
 }
 
 export default function ChatsScreen() {
-  const [selectedConversation, setSelectedConversation] = useState<null | typeof conversations[number]>(null);
+  const [conversations, setConversations] = useState(initialConversations);
+  const [selectedConversation, setSelectedConversation] = useState<null | typeof initialConversations[number]>(null);
 
   if (selectedConversation) {
     return (
@@ -90,7 +91,19 @@ export default function ChatsScreen() {
         data={conversations}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
-          <ConversationItem item={item} onPress={() => setSelectedConversation(item)} />
+          <ConversationItem
+            item={item}
+            onPress={() => {
+              // mark as read in state and open
+              setConversations(prev => {
+                const next = prev.map(c => (c.id === item.id ? { ...c, unread: 0 } : c));
+                // update selectedConversation to the cleared item
+                const selected = next.find(c => c.id === item.id) || item;
+                setSelectedConversation(selected as typeof initialConversations[number]);
+                return next;
+              });
+            }}
+          />
         )}
         contentContainerStyle={styles.list}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
