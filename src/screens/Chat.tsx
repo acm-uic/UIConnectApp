@@ -25,6 +25,28 @@ export default function ChatScreen({
       .slice(0, 2)
       .join('')
       .toUpperCase();
+
+  type Message = { id: string; text?: string; sender: 'me' | 'them'; time?: string };
+
+  const messagesMap: Record<string, Message[]> = {
+    '1': [
+      { id: 'm1', text: "Hey! Are we still on for tonight?", sender: 'them', time: '2:10 PM' },
+      { id: 'm2', text: "Yes — I'll meet you at 7pm.", sender: 'me', time: '2:12 PM' },
+      { id: 'm3', text: "Perfect, see you then!", sender: 'them', time: '2:14 PM' },
+    ],
+    '2': [
+      { id: 'm1', text: "Thanks for the notes — I'll read through them.", sender: 'them', time: 'Yesterday' },
+      { id: 'm2', text: "No problem, let me know if you have questions.", sender: 'me', time: 'Yesterday' },
+    ],
+    '3': [
+      { id: 'm1', text: 'Sent you the files.', sender: 'them', time: 'Mon' },
+    ],
+    '4': [
+      { id: 'm1', text: 'Lol that was hilarious 😂', sender: 'them', time: 'Nov 5' },
+    ],
+  };
+
+  const messages: Message[] = conversation ? messagesMap[conversation.id] ?? [] : [];
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -69,16 +91,16 @@ export default function ChatScreen({
             </TouchableOpacity>
         </View>
       </View>
-  <ScrollView contentContainerStyle={styles.messages} keyboardShouldPersistTaps="handled">
-        <View style={[styles.bubble, styles.bubbleLeft]}>
-          <Text>Hey there! How's your week going?</Text>
-        </View>
-        <View style={[styles.bubble, styles.bubbleRight]}>
-          <Text style={{ color: '#fff' }}>Hi! It's going well, thanks. Just finished a big project.</Text>
-        </View>
-        <View style={[styles.bubble, styles.bubbleLeft]}>
-          <Text>That's awesome! Want to grab coffee this weekend to celebrate?</Text>
-        </View>
+      <ScrollView contentContainerStyle={styles.messages} keyboardShouldPersistTaps="handled">
+        {messages.map(m => (
+          <View
+            key={m.id}
+            style={[styles.bubble, m.sender === 'me' ? styles.bubbleRight : styles.bubbleLeft]}
+          >
+            <Text style={m.sender === 'me' ? styles.bubbleTextRight : undefined}>{m.text}</Text>
+            {m.time ? <Text style={styles.messageTime}>{m.time}</Text> : null}
+          </View>
+        ))}
       </ScrollView>
 
   <View style={styles.composer}>
@@ -124,7 +146,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#007AFF',
+    backgroundColor: '#b71c1c',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
@@ -145,6 +167,8 @@ const styles = StyleSheet.create({
   bubble: { padding: 12, borderRadius: 12, marginBottom: 8, maxWidth: '80%' },
   bubbleLeft: { backgroundColor: '#f1f1f1', alignSelf: 'flex-start' },
   bubbleRight: { backgroundColor: '#b71c1c', alignSelf: 'flex-end' },
+  bubbleTextRight: { color: '#fff' },
+  messageTime: { fontSize: 10, color: '#888', marginTop: 6, alignSelf: 'flex-end' },
   composer: { flexDirection: 'row', padding: 10, borderTopWidth: 1, borderTopColor: '#eee', alignItems: 'center' },
   input: { flex: 1, borderWidth: 1, borderColor: '#ddd', borderRadius: 20, paddingHorizontal: 12, paddingVertical: 8, marginRight: 8 },
   sendBtn: { backgroundColor: '#b71c1c', paddingVertical: 10, paddingHorizontal: 14, borderRadius: 20 },

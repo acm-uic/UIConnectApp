@@ -1,26 +1,19 @@
 import React, { useState } from 'react';
-import {
-  FlatList,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
 import ChatScreen from './Chat';
 
 const conversations = [
   {
     id: '1',
     name: 'Alex Johnson',
-    lastMessage: 'Hey, are we still on for tonight?',
+    lastMessage: 'Perfect, see you then!',
     time: '2:14 PM',
-    unread: 2,
+    unread: 1,
   },
   {
     id: '2',
     name: 'Taylor Smith',
-    lastMessage: "Thanks for the notes — I'll read through them.",
+    lastMessage: "No problem, let me know if you have questions.",
     time: 'Yesterday',
     unread: 0,
   },
@@ -90,8 +83,8 @@ export default function ChatsScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       {/* <View style={styles.header}>
-      <Text style={styles.headerTitle}>Chats</Text>
-      </View> Removed second Chats */}
+        <Text style={styles.headerTitle}>Chats</Text>
+      </View> */}
 
       <FlatList
         data={conversations}
@@ -122,7 +115,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#007AFF',
+    backgroundColor: '#b71c1c',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
